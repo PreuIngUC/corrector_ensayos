@@ -1,0 +1,140 @@
+\documentclass[10pt,letterpaper]{article}
+
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[letterpaper,margin=0.8cm]{geometry} % Margen seguro para impresoras caseras
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage{helvet}
+\usepackage{array}
+\renewcommand{\familydefault}{\sfdefault}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+
+% ---------- Colores ----------
+\definecolor{azulpreu}{RGB}{25,72,155}
+\definecolor{gristexto}{RGB}{85,85,85}
+
+% ---------- Comandos de Burbujas ----------
+\newcommand{\bubbleletter}[1]{%
+\tikz[baseline=-0.6ex]{ 
+    \draw[line width=0.6pt, color=gristexto] (0,0) circle (0.16cm);
+    \node[font=\tiny\bfseries, text=gristexto] at (0,0) {#1};
+}}
+
+\newcommand{\bubbleRut}[1]{%
+\tikz[baseline=-0.6ex]{
+    \draw[line width=0.5pt, color=azulpreu!70] (0,0) circle (0.13cm);
+    \node[font=\fontsize{5}{5}\selectfont, text=azulpreu] at (0,0) {#1};
+}}
+
+\newcommand{\filarespuesta}[1]{%
+\textbf{\scriptsize #1} & \bubbleletter{A} & \bubbleletter{B} & \bubbleletter{C} & \bubbleletter{D} & \bubbleletter{E} \\
+}
+
+\begin{document}
+
+% --- Marcas de esquina OMR (Agrandadas a 6x6 mm para apps como Notebloc) ---
+\begin{tikzpicture}[remember picture,overlay]
+  \fill[black] ([xshift=0.7cm,yshift=-0.7cm]current page.north west) rectangle ++(0.6cm,-0.6cm);
+  \fill[black] ([xshift=-1.3cm,yshift=-0.7cm]current page.north east) rectangle ++(0.6cm,-0.6cm);
+  \fill[black] ([xshift=0.7cm,yshift=1.3cm]current page.south west) rectangle ++(0.6cm,-0.6cm);
+  \fill[black] ([xshift=-1.3cm,yshift=1.3cm]current page.south east) rectangle ++(0.6cm,-0.6cm);
+\end{tikzpicture}
+
+% --- Encabezado ---
+\begin{center}
+    {\Large\bfseries\textcolor{azulpreu}{ENSAYO DIAGNÓSTICO M1}} \\[0.05cm]
+    {\small\color{gristexto} HOJA DE RESPUESTAS ESTÁNDAR OMR BETA} \\[0.25cm]
+    % Línea combinada de Nombre y RUT
+    {\small\bfseries Nombre: \underline{\hspace{9cm}} \hspace{0.5cm} RUT: \underline{\hspace{4cm}}}
+\end{center}
+
+\vspace{0.1cm} 
+
+% --- Sección RUT ---
+\begin{center}
+\begin{tikzpicture}
+\node[draw=azulpreu, rounded corners=6pt, line width=0.9pt, inner sep=6pt]{
+\begin{minipage}{0.9\textwidth}
+    \centering
+    {\bfseries\scriptsize\textcolor{azulpreu}{MARQUE SU RUT}}\\[0.2cm]
+    \begin{tikzpicture}[x=0.68cm, y=0.34cm] 
+        
+        % Burbujas numéricas
+        \foreach \n in {0,...,9}{
+            \pgfmathsetmacro\y{10-\n}
+            \node[anchor=east, font=\tiny\bfseries, text=gristexto] at (-0.2, \y) {\n};
+            \foreach \x in {0,...,8}{
+                \node at (\x+0.28, \y) {\bubbleRut{\n}};
+            }
+        }
+        % Fila K (Alineada exactamente en la columna 8: 8 + 0.28 = 8.28)
+        \node at (8.28, -1) {\bubbleRut{K}};
+    \end{tikzpicture}
+\end{minipage}
+};
+\end{tikzpicture}
+\end{center}
+
+\vspace{0.15cm} 
+
+% --- Sección Respuestas (65 preguntas en 3 columnas) ---
+\begin{center}
+\begin{tikzpicture}
+\node[draw=azulpreu, rounded corners=6pt, line width=0.9pt, inner sep=8pt]{
+\begin{minipage}{0.96\textwidth}
+    \centering
+    {\bfseries\small\textcolor{azulpreu}{RESPUESTAS}} \\[0.15cm]
+    
+    % Columna 1
+    \begin{minipage}[t]{0.32\textwidth}
+        \centering
+        \renewcommand{\arraystretch}{1.03} 
+        \begin{tabular}{rccccc}
+            \filarespuesta{1} \filarespuesta{2} \filarespuesta{3} \filarespuesta{4} \filarespuesta{5}
+            \filarespuesta{6} \filarespuesta{7} \filarespuesta{8} \filarespuesta{9} \filarespuesta{10}
+            \filarespuesta{11} \filarespuesta{12} \filarespuesta{13} \filarespuesta{14} \filarespuesta{15}
+            \filarespuesta{16} \filarespuesta{17} \filarespuesta{18} \filarespuesta{19} \filarespuesta{20}
+            \filarespuesta{21} \filarespuesta{22}
+        \end{tabular}
+    \end{minipage}
+    \hfill
+    % Columna 2
+    \begin{minipage}[t]{0.32\textwidth}
+        \centering
+        \renewcommand{\arraystretch}{1.03}
+        \begin{tabular}{rccccc}
+            \filarespuesta{23} \filarespuesta{24} \filarespuesta{25} \filarespuesta{26} \filarespuesta{27}
+            \filarespuesta{28} \filarespuesta{29} \filarespuesta{30} \filarespuesta{31} \filarespuesta{32}
+            \filarespuesta{33} \filarespuesta{34} \filarespuesta{35} \filarespuesta{36} \filarespuesta{37}
+            \filarespuesta{38} \filarespuesta{39} \filarespuesta{40} \filarespuesta{41} \filarespuesta{42}
+            \filarespuesta{43} \filarespuesta{44}
+        \end{tabular}
+    \end{minipage}
+    \hfill
+    % Columna 3
+    \begin{minipage}[t]{0.32\textwidth}
+        \centering
+        \renewcommand{\arraystretch}{1.03}
+        \begin{tabular}{rccccc}
+            \filarespuesta{45} \filarespuesta{46} \filarespuesta{47} \filarespuesta{48} \filarespuesta{49}
+            \filarespuesta{50} \filarespuesta{51} \filarespuesta{52} \filarespuesta{53} \filarespuesta{54}
+            \filarespuesta{55} \filarespuesta{56} \filarespuesta{57} \filarespuesta{58} \filarespuesta{59}
+            \filarespuesta{60} \filarespuesta{61} \filarespuesta{62} \filarespuesta{63} \filarespuesta{64}
+            \filarespuesta{65}
+        \end{tabular}
+    \end{minipage}
+    
+\end{minipage}
+};
+\end{tikzpicture}
+\end{center}
+
+\vfill
+\begin{center}
+    \scriptsize \color{gray} cada casilla mal marcada equivale a una lágrima de Prewin :(
+\end{center}
+
+\end{document}
